@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { Store } from 'rc-field-form/lib/interface'
 import md5 from 'md5'
-import { connect } from 'react-redux'
-import { RouteComponentProps } from 'react-router-dom'
 import styles from './index.module.less'
-import { LoginParamsType } from './service'
-import { loginByAccount } from '@/store/user/action'
 import { getRememberUser, setRememberUser, removeRememberUser } from '@/utils/local'
+import { useRootStore } from '@/store'
 
-interface IProps extends RouteComponentProps {
-  loginByAccount: (data: LoginParamsType) => any
-}
-
-const Login: React.FC<IProps> = props => {
-  const { loginByAccount: loginByAccountDispatch } = props
+const Login = () => {
+  const { userStore } = useRootStore()
+  const history = useHistory()
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   useEffect(() => {
@@ -36,9 +31,11 @@ const Login: React.FC<IProps> = props => {
       userName: values.userName,
       password: md5(md5(values.password))
     }
-    loginByAccountDispatch({
+    userStore.loginByAccount({
       loadingCb: v => setLoading(v),
       data: params
+    }).then(() => {
+      history.replace('/dashboard')
     })
   }
   return (
@@ -87,14 +84,4 @@ const Login: React.FC<IProps> = props => {
   )
 }
 
-// const mapStateToProps = (state: AppState) => ({
-//   userInfo: state.user.userInfo
-// })
-const mapDispatchToProps = {
-  loginByAccount
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(React.memo(Login))
+export default React.memo(Login)

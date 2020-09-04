@@ -1,26 +1,16 @@
-import { createStore, compose, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import rootReducer from './reducer'
-import { initUserData } from './user/action'
-import { getUser } from '@/utils/local'
-import { history } from '@/utils/history'
+import { createContext, useContext } from 'react'
+import appStore from './app'
+import userStore from './user'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = {
+  appStore,
+  userStore
+}
 
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(thunk))
-)
+const StoreContext = createContext(store)
+
+export const useRootStore = () => useContext(StoreContext)
+
+export type RootStoreType = ReturnType<typeof useRootStore>
+
 export default store
-export type ReducerActionType<T = {}> = {
-  type: string
-  data: T
-}
-// 初始化用户信息
-const user = getUser()
-if (user) {
-  initUserData(store.dispatch, user)
-} else {
-  history.replace('/login')
-}
-export type AppState = ReturnType<typeof rootReducer>

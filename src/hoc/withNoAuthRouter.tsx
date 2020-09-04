@@ -1,19 +1,21 @@
-import React, { PureComponent } from 'react'
-import { Redirect, RouteComponentProps } from 'react-router-dom'
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { getToken } from '@/utils/local'
+import { getDisplayName } from '@/utils'
 
-function withNoAuthRouter(OriginalComponent: React.ComponentType<RouteComponentProps>) {
-  class HocWrappedNoAuthRouter extends PureComponent<RouteComponentProps> {
+function withNoAuthRouter<P extends object>(WrappedComponent: React.ComponentType<P>) {
+  class WithNoAuthRouter extends Component {
+    static displayName = `WithNoAuthRouter(${getDisplayName(WrappedComponent)})`
     render() {
       const token = getToken()
       if (token) {
         return <Redirect to={{ pathname: '/dashboard' }} />
       }
       return (
-        <OriginalComponent {...this.props} />
+        <WrappedComponent {...this.props as P} />
       )
     }
   }
-  return HocWrappedNoAuthRouter
+  return WithNoAuthRouter
 }
 export default withNoAuthRouter

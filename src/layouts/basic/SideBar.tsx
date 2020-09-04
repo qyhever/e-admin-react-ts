@@ -7,7 +7,7 @@ import styles from './index.module.less'
 import logoUrl from '@/assets/images/logo.png'
 import IconFont from '@/components/iconfont'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { MenuConfigType } from '@/store/user/reducer'
+import { MenuItemType } from '@/store/user'
 import { getSideBarTheme, setSideBarTheme } from '@/utils/local'
 const { Sider } = Layout
 const { Item, SubMenu } = Menu
@@ -15,10 +15,10 @@ const { Item, SubMenu } = Menu
 // https://github.com/ant-design/ant-design/issues/17551
 
 // 获取所有 menu（非父菜单，能选中高亮的） 的 key（即 path）
-const getTotalSelectedKeys = (routes: MenuConfigType[]) => {
+const getTotalSelectedKeys = (routes: MenuItemType[]) => {
   // 先获取所有 menu（扁平化过后的）
-  function getTotalSelectedMenus(routes: MenuConfigType[]) {
-    let result: MenuConfigType[] = []
+  function getTotalSelectedMenus(routes: MenuItemType[]) {
+    let result: MenuItemType[] = []
     routes.forEach(item => {
       if (Array.isArray(item.routes)) {
         result = result.concat(getTotalSelectedMenus(item.routes))
@@ -50,7 +50,7 @@ const RenderIcon: React.FC<{
   return <SmileOutlined/>
 }
 // 生成菜单树
-const generateMenus = (menus: MenuConfigType[]) => {
+const generateMenus = (menus: MenuItemType[]) => {
   return menus.map(item => {
     if (Array.isArray(item.routes)) {
       const title = (
@@ -77,7 +77,7 @@ const generateMenus = (menus: MenuConfigType[]) => {
 }
 type IProps = {
   collapsed: boolean
-  menus: MenuConfigType[]
+  menus: MenuItemType[]
   location: Location
 }
 type IState = {
@@ -154,6 +154,7 @@ class SideBar extends PureComponent<IProps, IState> {
         className={`${styles.sideBar} ${styles[theme]}`}
         collapsible
         collapsed={collapsed}
+        collapsedWidth={60}
         trigger={null}
         theme={theme}>
         <Scrollbars style={{height: '100%'}} autoHide>

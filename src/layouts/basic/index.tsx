@@ -1,72 +1,44 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { renderRoutes, RouteConfig } from 'react-router-config'
-import { RouteComponentProps } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { UserStoreType } from '@/store/user/reducer'
-import { toggleCollapsed, ToggleCollapsedType } from '@/store/app/action'
+import { useHistory, useLocation } from 'react-router-dom'
+import { observer } from 'mobx-react'
 import SideBar from './SideBar'
 import HeaderBar from './HeaderBar'
 import styles from './index.module.less'
-import { AppState } from '@/store'
+import { useRootStore } from '@/store'
 
-type IProps = RouteConfig & RouteComponentProps & {
-  user: UserStoreType
-  collapsed: boolean
-  toggleCollapsed: ToggleCollapsedType
+type IProps = {
+  route?: RouteConfig
 }
 
-type IState = Readonly<{
-  collapsed: boolean
-  pathname: string
-}>
-
-class BasicLayout extends PureComponent<IProps> {
-  state: IState = {
-    collapsed: false,
-    pathname: ''
+const BasicLayout: React.FC<IProps> = (props) => {
+  const { route } = props
+  const history = useHistory()
+  const location = useLocation()
+  const { userStore, appStore } = useRootStore()
+  const { currentUser, menus } = userStore
+  const { collapsed, toggleCollapsed } = appStore
+  const sidebarProps = {
+    collapsed,
+    menus,
+    location
   }
-  handleToggle = () => {
-    this.props.toggleCollapsed()
-    // this.setState({
-    //   collapsed: !this.state.collapsed
-    // })
+  const headerProps = {
+    collapsed,
+    toggleCollapsed,
+    user: currentUser,
+    history
   }
-  render() {
-    // const { collapsed } = this.state
-    const { route, location, history, user, collapsed } = this.props
-    const { currentUser, menus } = user
-    const sidebarProps = {
-      collapsed,
-      menus,
-      location
-    }
-    const headerProps = {
-      collapsed,
-      onToggle: this.handleToggle,
-      user: currentUser,
-      history
-    }
-    return (
-      <div className={styles.basicLayout}>
-        <SideBar {...sidebarProps} />
-        <section className={`${styles.appMain} ${collapsed ? styles.collapsed : ''}`}>
-          <div className={styles.headerPadding} />
-          <HeaderBar {...headerProps} />
-          {renderRoutes(route.routes)}
-        </section>
-      </div>
-    )
-  }
-}
-const mapStateToProps = ({ app, user }: AppState) => ({
-  collapsed: app.collapsed,
-  user
-})
-const mapDispatchToProps = {
-  toggleCollapsed
+  return (
+    <div className={`${styles.basicLayout} ${collapsed ? styles.collapsed : ''}`}>
+      <SideBar {...sidebarProps} />
+      <section className={styles.appMain}>
+        <div className={styles.headerPadding} />
+        <HeaderBar {...headerProps} />
+        {renderRoutes((route as RouteConfig).routes)}
+      </section>
+    </div>
+  )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BasicLayout)
+export default observer(BasicLayout)

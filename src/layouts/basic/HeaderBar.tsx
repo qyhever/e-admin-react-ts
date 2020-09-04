@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, Menu, Row } from 'antd'
+import { Dropdown, Menu, Row, Avatar } from 'antd'
 import { History } from 'history'
 // import { MenuInfo } from 'rc-menu/lib/interface'
 import { ClickParam } from 'antd/lib/menu'
@@ -7,16 +7,19 @@ import styles from './index.module.less'
 import { CaretDownOutlined, MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from '@ant-design/icons'
 import avatarUrl from '@/assets/images/user.png'
 import { removeUserData } from '@/utils/local'
-import { CurrentUserType } from '@/store/user/reducer'
+import { CurrentUserType } from '@/store/user'
+import { useFullscreen } from 'ahooks'
+import FullScreenIcon from '@/components/fullscreen'
 
 type IProps = {
   collapsed: boolean
-  onToggle: () => void
+  toggleCollapsed: () => void
   user: CurrentUserType
   history: History
 }
 const HeaderBar: React.FC<IProps> = props => {
-  const { collapsed, onToggle, user } = props
+  const { collapsed, toggleCollapsed, user } = props
+  const [, { toggleFull }] = useFullscreen(() => document.getElementById('root'))
   // MenuInfo https://github.com/ant-design/ant-design/issues/25467
   const handleMenuClick = ({ key }: ClickParam) => {
     if (key === 'logout') {
@@ -25,8 +28,12 @@ const HeaderBar: React.FC<IProps> = props => {
     }
   }
   const onSidebarToggle = () => {
-    onToggle()
+    toggleCollapsed()
   }
+  const onToggleFullscreen = () => {
+    toggleFull()
+  }
+
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="logout">
@@ -42,15 +49,22 @@ const HeaderBar: React.FC<IProps> = props => {
       <Row className={styles.headerToggle} align="middle" justify="center" onClick={onSidebarToggle}>
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Row>
-      <div className={styles.headerRight}>
+      <Row className={styles.headerRight} align="middle" justify="center">
+        <div onClick={onToggleFullscreen} className={styles.fullscreen}>
+          <FullScreenIcon />
+        </div>
         <Dropdown overlay={menu} placement="bottomRight">
           <Row className={styles.user} align="middle">
             <span className={styles.name}>{user.userName || '用户名'}</span>
-            <img className={styles.avatar} src={user.avatar || avatarUrl} alt="avatar" />
+            <Avatar
+              className={styles.avatar}
+              src={user.avatar}
+              icon={<img src={avatarUrl} alt="avatar"/>}
+            />
             <CaretDownOutlined />
           </Row>
         </Dropdown>
-      </div>
+      </Row>
     </header>
   )
 }

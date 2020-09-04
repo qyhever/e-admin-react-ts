@@ -1,7 +1,7 @@
 import React from 'react'
 import { ConfigProvider } from 'antd'
 import zhCN from 'antd/es/locale/zh_CN'
-import { Provider } from 'react-redux'
+import { Provider } from 'mobx-react'
 import store from './store'
 import RouterConfig from './router'
 
@@ -16,7 +16,7 @@ dayjs.locale('zh-cn')
 const App = () => {
   return (
     <ConfigProvider locale={zhCN}>
-      <Provider store={store}>
+      <Provider {...store}>
         <RouterConfig/>
       </Provider>
     </ConfigProvider>

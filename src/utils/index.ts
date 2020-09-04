@@ -1,9 +1,10 @@
 import React from 'react'
-import { BreadItemType, MenuConfigType } from '@/store/user/reducer'
-import { CommonRouteConfig } from '@/router/routes'
+import { RouteConfig } from 'react-router-config'
+import { BreadItemType, MenuItemType } from '@/store/user'
+import { isString } from '@/utils/type'
 
 // 获取包装组件的 displayName 的方法
-export const getDisplayName = (WrappedComponent: React.ComponentType) => {
+export const getDisplayName = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
@@ -30,23 +31,23 @@ export const listToTree = (list: any[], id: string | null, key: string, parentKe
 /**
  * 判断当前路由是否拥有权限
  * @param {Array<string>} resourceCodes 当前用户拥有的所有权限 code list
- * @param {CommonRouteConfig} route 当前路由对象
+ * @param {RouteConfig} route 当前路由对象
  * @return {Boolean} 是否拥有权限
  */
-export const hasPermission = (route: CommonRouteConfig, resourceCodes: string[]) => {
-  if (route.auth && route.auth.length) {
+export const hasPermission = (route: RouteConfig, resourceCodes: string[]) => {
+  if (Array.isArray(route.auth) && route.auth.length) {
     return route.auth.some(code => resourceCodes.includes(code))
   }
   return true
 }
 /**
  * 可访问菜单，从 routes 中过滤出 有权限的 menu
- * @param {Array<CommonRouteConfig>} routes 路由表
+ * @param {Array<RouteConfig>} routes 路由表
  * @param {Array<string>} resourceCodes 当前用户拥有的所有权限 code list
- * @return {Array<MenuConfigType>} 有权限的 menu list
+ * @return {Array<MenuItemType>} 有权限的 menu list
  */
-export const getAccessMenus = (routes: CommonRouteConfig[], resourceCodes: string[]) => {
-  const res: MenuConfigType[] = []
+export const getAccessMenus = (routes: RouteConfig[], resourceCodes: string[]) => {
+  const res: MenuItemType[] = []
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(tmp, resourceCodes)) {
@@ -54,16 +55,16 @@ export const getAccessMenus = (routes: CommonRouteConfig[], resourceCodes: strin
         tmp.routes = getAccessMenus(tmp.routes, resourceCodes)
         if (tmp.routes.length) {
           res.push({
-            path: tmp.path || '',
+            path: isString(tmp.path) ? tmp.path : '',
             title: tmp.title || '',
             icon: tmp.icon || '',
             hidden: tmp.hidden || false,
-            routes: tmp.routes as MenuConfigType[]
+            routes: tmp.routes as MenuItemType[]
           })
         }
       } else {
         res.push({
-          path: tmp.path || '',
+          path: isString(tmp.path) ? tmp.path : '',
           title: tmp.title || '',
           icon: tmp.icon || '',
           hidden: tmp.hidden || false
@@ -77,13 +78,13 @@ export const getAccessMenus = (routes: CommonRouteConfig[], resourceCodes: strin
 
 /**
  * 根据路由表获取扁平化的面包屑列表
- * @param {Array<CommonRouteConfig>} routes 路由表
+ * @param {Array<RouteConfig>} routes 路由表
  * @return {Array<BreadItemType>} 面包屑列表
  */
-export const getFlattenMenus = (routes: CommonRouteConfig[]) => {
+export const getFlattenMenus = (routes: RouteConfig[]) => {
   let result: BreadItemType[] = []
   routes.forEach(item => {
-    if (typeof item.path === 'string' && item.path !== '*') {
+    if (isString(item.path) && item.path !== '*') {
       result.push({
         path: item.path,
         breadcrumb: item.breadcrumb || item.title

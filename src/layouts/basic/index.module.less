@@ -6,13 +6,12 @@
   overflow-y: hidden;
 }
 .sideBar {
-  z-index: 1999;
-  background-color: #001529;
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
-  overflow: hidden;
+  padding-bottom: @toggle-theme-bar;
   box-shadow: 0 0 18px 0 rgba(24, 144, 255, .1);
   &.dark {
     background-color: #001529;
@@ -38,6 +37,7 @@
     .image {
       width: 48px;
       height: 48px;
+      display: inline-block;
       vertical-align: middle;
     }
     .title {
@@ -65,7 +65,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 48px;
+    height: @toggle-theme-bar;
     align-items: center;
     padding: 0 16px;
     color: #666;
@@ -79,7 +79,7 @@
   }
 }
 .headerBar {
-  z-index: 1999;
+  z-index: 998;
   position: fixed;
   top: 0;
   left: @sidebar-width;
@@ -89,6 +89,7 @@
   justify-content: space-between;
   background-color: #fff;
   transition: left .2s;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
   .headerToggle {
     width: @header-height;
     height: @header-height;
@@ -113,10 +114,13 @@
       margin: 0 12px;
     }
     .avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
       margin-right: 12px;
+    }
+    .fullscreen {
+      cursor: pointer;
+      :global(.anticon) {
+        font-size: 24px;
+      }
     }
   }
 }
@@ -131,10 +135,19 @@
   // overflow-x: hidden;
   margin-left: @sidebar-width;
   transition: margin-left .2s;
+}
+.basicLayout {
   &.collapsed {
-    margin-left: @sidebar-collapsed-width;
-    .headerBar {
-      left: @sidebar-collapsed-width;
+    > .sideBar {
+      .toggleTheme {
+        padding: 0 8px;
+      }
+    }
+    > .appMain {
+      margin-left: @sidebar-collapsed-width;
+      .headerBar {
+        left: @sidebar-collapsed-width;
+      }
     }
   }
 }

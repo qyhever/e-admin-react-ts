@@ -1,1 +1,0 @@
-export const TOGGLE_COLLAPSED = 'app/TOGGLE_COLLAPSED'

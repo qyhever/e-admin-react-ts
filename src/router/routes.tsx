@@ -1,8 +1,7 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy } from 'react'
 import { Redirect } from 'react-router-dom'
 import { RouteConfig } from 'react-router-config'
 
-import RouterLoading from '@/components/router-loading'
 import BlankLayout from '@/layouts/blank'
 import BasicLayout from '@/layouts/basic'
 
@@ -12,17 +11,8 @@ import withAuthRouter from '@/hoc/withAuthRouter'
 import withNoAuthRouter from '@/hoc/withNoAuthRouter'
 import Dashboard from '@/views/dashboard'
 
-const loadable = (path: string) => {
-  const HocWrappedSuspense: React.FC = (props) => {
-    const asyncComponent = () => import(/* webpackChunkName: '[request]' */`@/views/${path}`)
-    const Component = lazy(asyncComponent)
-    return (
-      <Suspense fallback={<RouterLoading />}>
-        <Component {...props}/>
-      </Suspense>
-    )
-  }
-  return HocWrappedSuspense
+function lazyComponent(path: string) {
+  return lazy(() => import(/* webpackChunkName: '[request]' */`@/views/${path}`))
 }
 
 export interface CommonRouteConfig extends RouteConfig{
@@ -35,7 +25,7 @@ export interface CommonRouteConfig extends RouteConfig{
   [propName: string]: any
 }
 
-export const basicRoutes: CommonRouteConfig[] = [
+export const basicRoutes: RouteConfig[] = [
   {
     path: '/dashboard',
     exact: true,
@@ -53,13 +43,13 @@ export const basicRoutes: CommonRouteConfig[] = [
       {
         path: '/base/clipboard',
         exact: true,
-        component: withAuthRouter(loadable('base/clipboard')),
+        component: withAuthRouter(lazyComponent('base/clipboard')),
         title: '复制'
       },
       {
         path: '/base/qrcode',
         exact: true,
-        component: withAuthRouter(loadable('base/qrcode')),
+        component: withAuthRouter(lazyComponent('base/qrcode')),
         title: '二维码'
       }
     ]
@@ -67,21 +57,21 @@ export const basicRoutes: CommonRouteConfig[] = [
   {
     path: '/user',
     exact: true,
-    component: withAuthRouter(loadable('user')),
+    component: withAuthRouter(lazyComponent('user')),
     title: '账号管理',
     icon: 'UserOutlined'
   },
   {
     path: '/role',
     exact: true,
-    component: withAuthRouter(loadable('role')),
+    component: withAuthRouter(lazyComponent('role')),
     title: '角色管理',
     icon: 'icon-role'
   },
   {
     path: '/resource',
     exact: true,
-    component: withAuthRouter(loadable('resource')),
+    component: withAuthRouter(lazyComponent('resource')),
     title: '权限管理',
     icon: 'icon-resources'
   },
@@ -92,7 +82,7 @@ export const basicRoutes: CommonRouteConfig[] = [
   }
 ]
 
-const routes: CommonRouteConfig[] = [
+const routes: RouteConfig[] = [
   {
     path: '/',
     exact: true,

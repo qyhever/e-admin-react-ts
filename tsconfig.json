@@ -22,7 +22,8 @@
     "paths": {
       "@/*":["./*"]
     },
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "experimentalDecorators": true
   },
   "include": [
     "src"

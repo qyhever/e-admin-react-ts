@@ -1,4 +1,5 @@
 import { Base64 } from 'js-base64'
+import { CurrentUserType } from '@/store/user'
 
 const baseName = 'e-admin-ts'
 const TOKEN = `${baseName}-token`
@@ -32,7 +33,7 @@ export const setUser = (data: object) => {
   return localStorage.setItem(USER, enText)
 }
 
-export const getUser = () => {
+export const getUser = (): CurrentUserType | null => {
   const enText = localStorage.getItem(USER)
   if (!enText) {
     return null
