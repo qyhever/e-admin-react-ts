@@ -1,15 +1,15 @@
 import React, { Component, Suspense } from 'react'
-import { Redirect, RouteComponentProps } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { MatchedRoute } from 'react-router-config'
 import { inject } from 'mobx-react'
 import { getToken } from '@/utils/local'
 import { hasPermission, getDisplayName } from '@/utils'
 import RouterLoading from '@/components/router-loading'
 // import hoistStatics from 'hoist-non-react-statics'
-import { CurrentUserType } from '@/store/user'
+import { UserStoreType } from '@/store/user'
 
-type IProps = MatchedRoute<{}> & RouteComponentProps & {
-  userStore: CurrentUserType
+type IProps = MatchedRoute<{}> & {
+  userStore: UserStoreType
 }
 
 function withAuthRouter<P extends object>(WrappedComponent: React.ComponentType<P>) {

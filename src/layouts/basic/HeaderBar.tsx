@@ -1,8 +1,8 @@
 import React from 'react'
 import { Dropdown, Menu, Row, Avatar } from 'antd'
 import { History } from 'history'
-// import { MenuInfo } from 'rc-menu/lib/interface'
-import { ClickParam } from 'antd/lib/menu'
+import { MenuInfo } from 'rc-menu/lib/interface'
+// import { ClickParam } from 'antd/lib/menu'
 import styles from './index.module.less'
 import { CaretDownOutlined, MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from '@ant-design/icons'
 import avatarUrl from '@/assets/images/user.png'
@@ -21,7 +21,7 @@ const HeaderBar: React.FC<IProps> = props => {
   const { collapsed, toggleCollapsed, user } = props
   const [, { toggleFull }] = useFullscreen(() => document.getElementById('root'))
   // MenuInfo https://github.com/ant-design/ant-design/issues/25467
-  const handleMenuClick = ({ key }: ClickParam) => {
+  const handleMenuClick = ({ key }: MenuInfo) => {
     if (key === 'logout') {
       removeUserData()
       window.location.reload()

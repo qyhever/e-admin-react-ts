@@ -1,5 +1,5 @@
 import React from 'react'
-import { renderRoutes, RouteConfig } from 'react-router-config'
+import { renderRoutes, MatchedRoute } from 'react-router-config'
 import { useHistory, useLocation } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import SideBar from './SideBar'
@@ -7,9 +7,7 @@ import HeaderBar from './HeaderBar'
 import styles from './index.module.less'
 import { useRootStore } from '@/store'
 
-type IProps = {
-  route?: RouteConfig
-}
+type IProps = MatchedRoute<{}>
 
 const BasicLayout: React.FC<IProps> = (props) => {
   const { route } = props
@@ -35,7 +33,7 @@ const BasicLayout: React.FC<IProps> = (props) => {
       <section className={styles.appMain}>
         <div className={styles.headerPadding} />
         <HeaderBar {...headerProps} />
-        {renderRoutes((route as RouteConfig).routes)}
+        {renderRoutes(route.routes)}
       </section>
     </div>
   )

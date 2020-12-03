@@ -23,7 +23,8 @@
       "@/*":["./*"]
     },
     "downlevelIteration": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "strictFunctionTypes": false
   },
   "include": [
     "src"

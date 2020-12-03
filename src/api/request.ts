@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import qs from 'qs'
 import { message } from 'antd'
-import { getToken } from '@/utils/local'
+import { getToken, removeUserData } from '@/utils/local'
 
 const baseURL = {
   dev: 'https://qyhever.com/e-admin',
@@ -108,7 +108,8 @@ const requestCatchEnd = (
     removePending(error.response.config) // 在请求结束后，移除本次请求
     const { status } = error.response
     if (status === 401) {
-      // ...
+      removeUserData()
+      window.location.reload()
     }
   }
   // 抛出http错误

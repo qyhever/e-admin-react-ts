@@ -6,7 +6,6 @@ import store from './store'
 import RouterConfig from './router'
 
 import './assets/styles/index.less'
-// inject svg icon into dom
 import './assets/icons'
 
 import dayjs from 'dayjs'

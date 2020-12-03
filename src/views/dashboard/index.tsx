@@ -11,4 +11,4 @@ const Dashboard: React.FC = () => {
   )
 }
 
-export default React.memo(Dashboard)
+export default Dashboard

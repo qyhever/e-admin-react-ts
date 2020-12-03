@@ -9,7 +9,7 @@ function createCheckTypeFn<T>(type: string) {
 export const isFunc = createCheckTypeFn<Function>('Function')
 export const isUndefined = createCheckTypeFn<undefined>('Undefined')
 export const isString = createCheckTypeFn<string>('String')
-export const isObject = createCheckTypeFn('Object')
+export const isObject = createCheckTypeFn<object>('Object')
 export const isNumber = createCheckTypeFn<number>('Number')
 
 export function isHtmlElement(node: any) {

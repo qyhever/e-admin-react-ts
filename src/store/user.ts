@@ -2,7 +2,7 @@ import { action, observable } from 'mobx'
 import { login } from '@/views/login/service'
 import { setToken, setUser, getUser } from '@/utils/local'
 import { getAccessMenus, getFlattenMenus } from '@/utils'
-import { basicRoutes as routes } from '@/router/routes'
+import { concatRoutes as routes } from '@/router/routes'
 import { history } from '@/utils/history'
 import { LoginParamsType } from '@/views/login/service'
 
@@ -44,7 +44,7 @@ export type UserStoreType = {
   breads: BreadsType
 }
 
-class User {
+class User implements UserStoreType {
   constructor() {
     const localUser = getUser()
     if (localUser) {
@@ -63,13 +63,12 @@ class User {
     const res = await login(data)
     const user = res.userInfo
     user.resourceCodes = user.resources.map((item: {code: string}) => item.code)
+    setToken(user.token) // set local
+    setUser(user) // set local
     await this.initUserData(user)
   }
 
   @action initUserData = async (data: CurrentUserType) => {
-    setToken(data.token) // set local
-    setUser(data) // set local
-
     const menus = getAccessMenus(routes, data.resourceCodes)
     const breads = [...getFlattenMenus(routes), { path: '/', breadcrumb: '首页' }]
 

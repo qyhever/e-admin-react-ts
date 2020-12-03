@@ -10,7 +10,7 @@ const FullScreenIcon = () => {
     }
   }, [])
   return fullscreen ? (
-    <Tooltip title={'全屏'}>
+    <Tooltip title={'退出全屏'}>
       <FullscreenExitOutlined />
     </Tooltip>
   ) : (

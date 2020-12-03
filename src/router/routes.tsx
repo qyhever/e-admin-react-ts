@@ -7,9 +7,11 @@ import BasicLayout from '@/layouts/basic'
 
 import Login from '@/views/login'
 import Exception404 from '@/views/exception/404'
+import Exception403 from '@/views/exception/403'
 import withAuthRouter from '@/hoc/withAuthRouter'
 import withNoAuthRouter from '@/hoc/withNoAuthRouter'
 import Dashboard from '@/views/dashboard'
+import Analysis from '@/views/analysis'
 
 function lazyComponent(path: string) {
   return lazy(() => import(/* webpackChunkName: '[request]' */`@/views/${path}`))
@@ -76,10 +78,25 @@ export const basicRoutes: RouteConfig[] = [
     icon: 'icon-resources'
   },
   {
-    path: '*',
-    component: Exception404,
+    path: '/403',
+    component: Exception403,
     hidden: true
   }
+]
+
+export const blankRoutes: RouteConfig[] = [
+  {
+    path: '/analysis',
+    exact: true,
+    component: Analysis,
+    title: '分析页',
+    icon: 'DesktopOutlined'
+  }
+]
+
+export const concatRoutes = [
+  ...basicRoutes,
+  ...blankRoutes
 ]
 
 const routes: RouteConfig[] = [
@@ -97,6 +114,7 @@ const routes: RouteConfig[] = [
     component: withNoAuthRouter(Login),
     hidden: true
   },
+  ...blankRoutes,
   {
     name: 'BasicLayout',
     component: BasicLayout,

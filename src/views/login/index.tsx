@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Form, Input, Button, Checkbox } from 'antd'
-import { Store } from 'rc-field-form/lib/interface'
 import md5 from 'md5'
 import styles from './index.module.less'
 import { getRememberUser, setRememberUser, removeRememberUser } from '@/utils/local'
 import { useRootStore } from '@/store'
+
+type LoginFormType = {
+  userName: string
+  password: string
+  remember: boolean
+}
 
 const Login = () => {
   const { userStore } = useRootStore()
@@ -21,7 +26,7 @@ const Login = () => {
     }
   }, [form])
 
-  const onFinish = (values: Store) => {
+  const onFinish = (values: LoginFormType) => {
     if (values.remember) {
       setRememberUser(values)
     } else {
@@ -38,6 +43,11 @@ const Login = () => {
       history.replace('/dashboard')
     })
   }
+  const initialValues: LoginFormType = {
+    userName: '',
+    password: '',
+    remember: true
+  }
   return (
     <div className={styles.loginPage}>
       <div className={styles.formContainer}>
@@ -51,7 +61,7 @@ const Login = () => {
           hideRequiredMark
           colon={false}
           labelAlign="left"
-          initialValues={{ remember: true }}
+          initialValues={initialValues}
           onFinish={onFinish}>
           <Form.Item
             name="userName"
