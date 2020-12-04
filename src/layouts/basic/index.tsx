@@ -2,6 +2,8 @@ import React from 'react'
 import { renderRoutes, MatchedRoute } from 'react-router-config'
 import { useHistory, useLocation } from 'react-router-dom'
 import { observer } from 'mobx-react'
+import { compose } from 'recompose'
+import withNProgress from '@/hoc/withNProgress'
 import SideBar from './SideBar'
 import HeaderBar from './HeaderBar'
 import styles from './index.module.less'
@@ -14,7 +16,7 @@ const BasicLayout: React.FC<IProps> = (props) => {
   const history = useHistory()
   const location = useLocation()
   const { userStore, appStore } = useRootStore()
-  const { currentUser, menus } = userStore
+  const { currentUser, menus, breads } = userStore
   const { collapsed, toggleCollapsed } = appStore
   const sidebarProps = {
     collapsed,
@@ -25,7 +27,8 @@ const BasicLayout: React.FC<IProps> = (props) => {
     collapsed,
     toggleCollapsed,
     user: currentUser,
-    history
+    history,
+    breads
   }
   return (
     <div className={`${styles.basicLayout} ${collapsed ? styles.collapsed : ''}`}>
@@ -39,4 +42,7 @@ const BasicLayout: React.FC<IProps> = (props) => {
   )
 }
 
-export default observer(BasicLayout)
+export default compose(
+  withNProgress,
+  observer
+)(BasicLayout)

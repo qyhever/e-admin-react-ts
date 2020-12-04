@@ -12,3 +12,14 @@ html, body, #root {
   // min-height: 100vh;
   height: auto;
 }
+
+#nprogress {
+  .bar {
+    z-index: 9999;
+    background-color: @primary-color;
+  }
+  .spinner .spinner-icon {
+    border-top-color: @primary-color;
+    border-left-color: @primary-color;
+  }
+}

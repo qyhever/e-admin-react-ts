@@ -170,7 +170,6 @@ const removePending = (config: AxiosRequestConfig) => {
 }
 /**
  * 清空 pending 中的请求（在路由跳转时调用）
- * @param {Object} config
  */
 export const clearPending = () => {
   for (const [url, cancel] of pending) {

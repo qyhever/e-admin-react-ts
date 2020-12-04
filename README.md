@@ -7,6 +7,8 @@
 - `@types/md5`
 - `@types/classnames`
 - `@types/webpack-env`
+- `@types/nprogress`
+- `@types/recompose`
 - `react`
 - `react-dom`
 - `react-router-dom`
@@ -33,3 +35,4 @@
 - `sass-resources-loader`
 - `hoist-non-react-statics`
 - `ahooks`
+- `recompose`

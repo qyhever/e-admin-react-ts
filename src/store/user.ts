@@ -2,7 +2,7 @@ import { action, observable } from 'mobx'
 import { login } from '@/views/login/service'
 import { setToken, setUser, getUser } from '@/utils/local'
 import { getAccessMenus, getFlattenMenus } from '@/utils'
-import { concatRoutes as routes } from '@/router/routes'
+import { basicRoutes as routes } from '@/router/routes'
 import { history } from '@/utils/history'
 import { LoginParamsType } from '@/views/login/service'
 
@@ -55,20 +55,21 @@ class User implements UserStoreType {
   }
   @observable currentUser = {} as CurrentUserType
 
-  @observable menus = [] as MenuItemType[]
+  @observable menus: MenuItemType[] = []
 
-  @observable breads = [] as BreadItemType[]
+  @observable breads: BreadItemType[] = []
 
   @action loginByAccount = async (data: LoginParamsType) => {
     const res = await login(data)
     const user = res.userInfo
     user.resourceCodes = user.resources.map((item: {code: string}) => item.code)
+    // runInAction
     setToken(user.token) // set local
     setUser(user) // set local
-    await this.initUserData(user)
+    this.initUserData(user)
   }
 
-  @action initUserData = async (data: CurrentUserType) => {
+  @action initUserData = (data: CurrentUserType) => {
     const menus = getAccessMenus(routes, data.resourceCodes)
     const breads = [...getFlattenMenus(routes), { path: '/', breadcrumb: '首页' }]
 

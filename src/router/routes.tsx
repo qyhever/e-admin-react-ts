@@ -11,7 +11,6 @@ import Exception403 from '@/views/exception/403'
 import withAuthRouter from '@/hoc/withAuthRouter'
 import withNoAuthRouter from '@/hoc/withNoAuthRouter'
 import Dashboard from '@/views/dashboard'
-import Analysis from '@/views/analysis'
 
 function lazyComponent(path: string) {
   return lazy(() => import(/* webpackChunkName: '[request]' */`@/views/${path}`))
@@ -53,6 +52,11 @@ export const basicRoutes: RouteConfig[] = [
         exact: true,
         component: withAuthRouter(lazyComponent('base/qrcode')),
         title: '二维码'
+      },
+      {
+        path: '*',
+        component: Exception404,
+        hidden: true
       }
     ]
   },
@@ -81,22 +85,12 @@ export const basicRoutes: RouteConfig[] = [
     path: '/403',
     component: Exception403,
     hidden: true
-  }
-]
-
-export const blankRoutes: RouteConfig[] = [
+  },
   {
-    path: '/analysis',
-    exact: true,
-    component: Analysis,
-    title: '分析页',
-    icon: 'DesktopOutlined'
+    path: '*',
+    component: Exception404,
+    hidden: true
   }
-]
-
-export const concatRoutes = [
-  ...basicRoutes,
-  ...blankRoutes
 ]
 
 const routes: RouteConfig[] = [
@@ -114,16 +108,10 @@ const routes: RouteConfig[] = [
     component: withNoAuthRouter(Login),
     hidden: true
   },
-  ...blankRoutes,
   {
     name: 'BasicLayout',
     component: BasicLayout,
     routes: basicRoutes
-  },
-  {
-    path: '*',
-    component: Exception404,
-    hidden: true
   }
 ]
 

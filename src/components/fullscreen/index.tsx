@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
+import myScreenfull from 'screenfull'
+
+const screenfull = myScreenfull as screenfull.Screenfull
 
 const FullScreenIcon = () => {
-  const [fullscreen, setFullscreen] = useState(false)
+  const [isFullscreen, setFullscreen] = useState(false)
   useEffect(() => {
-    document.onfullscreenchange = () => {
-      setFullscreen(!!document.fullscreenElement)
+    const onScreenfullChange = () => {
+      setFullscreen(screenfull.isFullscreen)
+    }
+    onScreenfullChange()
+    screenfull.on('change', onScreenfullChange)
+    return () => {
+      screenfull.off('change', onScreenfullChange)
     }
   }, [])
-  return fullscreen ? (
+  return isFullscreen ? (
     <Tooltip title={'退出全屏'}>
       <FullscreenExitOutlined />
     </Tooltip>
@@ -20,4 +28,4 @@ const FullScreenIcon = () => {
   )
 }
 
-export default FullScreenIcon
+export default React.memo(FullScreenIcon)
