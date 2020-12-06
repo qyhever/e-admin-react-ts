@@ -8,6 +8,14 @@ export const getDisplayName = <P extends object>(WrappedComponent: React.Compone
   return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
+export const getTitle = (title: string | undefined) => {
+  const baseTitle = 'e-admin'
+  if (!title) {
+    return baseTitle
+  }
+  return `${baseTitle} - ${title}`
+}
+
 /**
  * 将一个扁平化的数组转换为树状结构
  * @param {Array} list

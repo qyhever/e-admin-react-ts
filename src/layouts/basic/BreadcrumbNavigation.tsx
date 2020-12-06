@@ -17,7 +17,6 @@ import { BreadsType } from '@/store/user'
 
 type IProps = InjectedProps
 const BreadcrumbComponent: React.FC<IProps> = (({ breadcrumbs }) => {
-  console.log(breadcrumbs)
   return (
     <Breadcrumb className={styles.bread}>
       {breadcrumbs.map((breadcrumb: any) => (
