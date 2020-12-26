@@ -40,7 +40,7 @@ const Login = () => {
       loadingCb: v => setLoading(v),
       data: params
     }).then(() => {
-      history.replace('/dashboard')
+      history.replace('/')
     })
   }
   const initialValues: LoginFormType = {

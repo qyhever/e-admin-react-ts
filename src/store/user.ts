@@ -71,7 +71,10 @@ class User implements UserStoreType {
 
   @action initUserData = (data: CurrentUserType) => {
     const menus = getAccessMenus(routes, data.resourceCodes)
-    const breads = [...getFlattenMenus(routes), { path: '/', breadcrumb: '首页' }]
+    const breads = [
+      ...getFlattenMenus(routes),
+      { path: '/', breadcrumb: '首页' }
+    ]
 
     this.currentUser = data
     this.menus = menus

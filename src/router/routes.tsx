@@ -16,19 +16,9 @@ function lazyComponent(path: string) {
   return lazy(() => import(/* webpackChunkName: '[request]' */`@/views/${path}`))
 }
 
-export interface CommonRouteConfig extends RouteConfig{
-  path?: string
-  hidden?: boolean
-  title?: string
-  icon?: string
-  auth?: string[]
-  routes?: CommonRouteConfig[]
-  [propName: string]: any
-}
-
 export const basicRoutes: RouteConfig[] = [
   {
-    path: '/dashboard',
+    path: '/basic/dashboard',
     exact: true,
     // component: withAuthRouter(loadable('dashboard')),
     component: Dashboard,
@@ -36,19 +26,19 @@ export const basicRoutes: RouteConfig[] = [
     icon: 'DesktopOutlined'
   },
   {
-    path: '/base',
+    path: '/basic/base',
     component: BlankLayout,
     title: '组件',
     icon: 'AppstoreOutlined',
     routes: [
       {
-        path: '/base/clipboard',
+        path: '/basic/base/clipboard',
         exact: true,
         component: withAuthRouter(lazyComponent('base/clipboard')),
         title: '复制'
       },
       {
-        path: '/base/qrcode',
+        path: '/basic/base/qrcode',
         exact: true,
         component: withAuthRouter(lazyComponent('base/qrcode')),
         title: '二维码'
@@ -61,28 +51,28 @@ export const basicRoutes: RouteConfig[] = [
     ]
   },
   {
-    path: '/user',
+    path: '/basic/user',
     exact: true,
     component: withAuthRouter(lazyComponent('user')),
     title: '账号管理',
     icon: 'UserOutlined'
   },
   {
-    path: '/role',
+    path: '/basic/role',
     exact: true,
     component: withAuthRouter(lazyComponent('role')),
     title: '角色管理',
     icon: 'icon-role'
   },
   {
-    path: '/resource',
+    path: '/basic/resource',
     exact: true,
     component: withAuthRouter(lazyComponent('resource')),
     title: '权限管理',
     icon: 'icon-resources'
   },
   {
-    path: '/403',
+    path: '/basic/403',
     component: Exception403,
     hidden: true
   },
@@ -98,7 +88,7 @@ const routes: RouteConfig[] = [
     path: '/',
     exact: true,
     render: () => (
-      <Redirect to={'/dashboard'} />
+      <Redirect to={'/basic/dashboard'} />
     ),
     hidden: true
   },
@@ -109,9 +99,14 @@ const routes: RouteConfig[] = [
     hidden: true
   },
   {
-    name: 'BasicLayout',
+    path: '/basic',
     component: BasicLayout,
     routes: basicRoutes
+  },
+  {
+    path: '*',
+    hidden: true,
+    component: Exception404
   }
 ]
 

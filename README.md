@@ -9,6 +9,7 @@
 - `@types/webpack-env`
 - `@types/nprogress`
 - `@types/recompose`
+- `@types/react-transition-group`
 - `react`
 - `react-dom`
 - `react-router-dom`
@@ -36,3 +37,4 @@
 - `hoist-non-react-statics`
 - `ahooks`
 - `recompose`
+- `react-transition-group`

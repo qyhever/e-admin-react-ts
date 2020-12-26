@@ -4,7 +4,6 @@ import { Breadcrumb } from 'antd'
 import withBreadcrumbs, { InjectedProps } from 'react-router-breadcrumbs-hoc'
 import styles from './index.module.less'
 import { BreadsType } from '@/store/user'
-
 /**
  * examples
  */
@@ -34,7 +33,10 @@ const BreadcrumbComponent: React.FC<IProps> = (({ breadcrumbs }) => {
 })
 
 const BreadcrumbNavigation: React.FC<{breadcrumbs: BreadsType}> = ({ breadcrumbs = [] }) => {
-  const BreadWrapper = withBreadcrumbs(breadcrumbs)(BreadcrumbComponent)
+  const BreadWrapper = withBreadcrumbs(
+    breadcrumbs,
+    {excludePaths: ['/basic']}
+  )(BreadcrumbComponent)
   return <BreadWrapper/>
 }
 export default BreadcrumbNavigation

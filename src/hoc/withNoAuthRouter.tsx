@@ -9,7 +9,7 @@ function withNoAuthRouter<P extends object>(WrappedComponent: React.ComponentTyp
     render() {
       const token = getToken()
       if (token) {
-        return <Redirect to={{ pathname: '/dashboard' }} />
+        return <Redirect to={{ pathname: '/' }} />
       }
       return (
         <WrappedComponent {...this.props as P} />

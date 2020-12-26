@@ -11,4 +11,11 @@ module.exports = function(app) {
       }
     })
   )
+  app.post('/upload', (req, res) => {
+    setTimeout(() => {
+      res.send({
+        key: 'https://qiniu.qyhever.com/15879321501070c8ed05f88249photo_2019-09-06_17-12-29.jpg'
+      })
+    }, 1000)
+  })
 }

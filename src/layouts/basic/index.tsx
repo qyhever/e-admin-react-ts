@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { renderRoutes, matchRoutes, MatchedRoute } from 'react-router-config'
 import { useHistory, useLocation } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { compose } from 'recompose'
 import { useTitle } from 'ahooks'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import withNProgress from '@/hoc/withNProgress'
 import SideBar from './SideBar'
 import HeaderBar from './HeaderBar'
@@ -42,7 +43,16 @@ const BasicLayout: React.FC<IProps> = (props) => {
       <section className={styles.appMain}>
         <div className={styles.headerPadding} />
         <HeaderBar {...headerProps} />
-        {renderRoutes(route.routes)}
+        <TransitionGroup component={Fragment}>
+          <CSSTransition
+            key={location.key}
+            timeout={{ enter: 300, exit: 0 }}
+            classNames="fade"
+            unmountOnExit
+          >
+            {renderRoutes(route.routes, {}, { location })}
+          </CSSTransition>
+        </TransitionGroup>
       </section>
     </div>
   )

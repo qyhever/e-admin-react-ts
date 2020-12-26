@@ -1,7 +1,15 @@
 .pageWrapper {
   min-height: calc(100vh - @header-height);
-  padding: 20px;
   background-color: @primary-bg-color;
+  &.isColmun {
+    height: calc(100vh - @header-height);
+  }
+  &.transparent .pageContainer {
+    background-color: transparent;
+  }
+  &.padding {
+    padding: 20px;
+  }
 }
 .pageContainer {
   border-radius: 4px;

@@ -25,7 +25,7 @@ function withAuthRouter<P extends object>(WrappedComponent: React.ComponentType<
       const { resourceCodes } = currentUser
       const hasAuth = hasPermission(route, resourceCodes)
       if (!hasAuth) {
-        return <Redirect to={{ pathname: '/403' }} />
+        return <Redirect to={{ pathname: '/basic/403' }} />
       }
       return (
         <Suspense fallback={<RouterLoading />}>

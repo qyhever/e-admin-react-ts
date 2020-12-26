@@ -147,7 +147,7 @@ class SideBar extends PureComponent<IProps, IState> {
   render() {
     const { theme } = this.state
     const { collapsed, menus } = this.props
-    const toggleThemeLeftStyle = { display: collapsed ? 'none' : 'block' }
+    const toggleThemeStyle = { display: collapsed ? 'none' : 'flex' }
     return (
       <Sider
         width={210}
@@ -172,8 +172,8 @@ class SideBar extends PureComponent<IProps, IState> {
             {generateMenus(menus)}
           </Menu>
         </Scrollbars>
-        <div className={styles.toggleTheme}>
-          <div className={styles.toggleThemeLeft} style={toggleThemeLeftStyle}>
+        <div className={styles.toggleTheme} style={toggleThemeStyle}>
+          <div className={styles.toggleThemeLeft}>
             <BulbOutlined />
             <span className={styles.toggleThemeText}>切换主题</span>
           </div>

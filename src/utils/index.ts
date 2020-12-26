@@ -8,6 +8,10 @@ export const getDisplayName = <P extends object>(WrappedComponent: React.Compone
   return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
+export const getRandomStr = () => {
+  return new Date().getTime() + Math.random().toString(16).slice(2)
+}
+
 export const getTitle = (title: string | undefined) => {
   const baseTitle = 'e-admin'
   if (!title) {
