@@ -38,6 +38,7 @@
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
+    "@welldone-software/why-did-you-render": "^6.0.5",
     "ahooks": "^2.5.0",
     "antd": "4.9.1",
     "antd-dayjs-webpack-plugin": "^1.0.0",

@@ -1,27 +1,57 @@
 import React from 'react'
+import { Spin, Form, Row, Col } from 'antd'
+import PageWrapper from '@/components/page-wrapper'
+import { queryFormColLayout } from '@/utils/layout'
 import useAsync from '@/hooks/useAsync'
 import { getRoles } from './service'
 // import { useRequest } from 'ahooks'
 import { Input, Button } from 'antd'
 
 const Role: React.FC = () => {
+  const [ form ] = Form.useForm()
   // () => getRoles({})
-  const [name, setName] = React.useState('')
-  const {data, run} = useAsync(() => {
-    // console.log(name)
-    return getRoles({name})
+  const {data, loading: querying, run} = useAsync(() => {
+    console.log(form.getFieldsValue())
+    return getRoles({
+      ...form.getFieldsValue()
+    })
   })
-  // console.log(result)
+  console.log(data)
   React.useEffect(() => {
     run()
   }, [run])
+  function onReset() {
+    form.resetFields()
+    run()
+  }
   return (
-    <div>
-      Role
-      <Input value={name} onChange={e => setName(e.target.value)}></Input>
-      <Button type="primary" onClick={run}>submit</Button>
-    </div>
+    <PageWrapper>
+      <Spin spinning={querying}>
+      <Form
+          form={form}
+        >
+          <Row>
+            <Col {...queryFormColLayout}>
+              <Form.Item
+                name="name"
+                label="角色名"
+                initialValue=""
+              >
+                <Input placeholder="请输入角色名" allowClear autoComplete="off" />
+              </Form.Item>
+            </Col>
+            <Col {...queryFormColLayout}>
+              <Form.Item wrapperCol={{offset: 2}}>
+                <Button type="primary" onClick={run}>查询</Button>
+                <Button onClick={onReset}>重置</Button>
+                <Button type="primary">添加</Button>
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </Spin>
+    </PageWrapper>
   )
 }
 
-export default Role
+export default React.memo(Role)
