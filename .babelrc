@@ -13,10 +13,20 @@
     [
       "babel-plugin-import",
       {
+        "libraryName": "lodash",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "lodash"
+    ],
+    [
+      "babel-plugin-import",
+      {
         "libraryName": "antd",
         "libraryDirectory": "es",
         "style": true
-      }
+      },
+      "antd"
     ],
     [
       "@babel/plugin-proposal-decorators",

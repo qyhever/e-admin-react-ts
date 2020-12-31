@@ -10,6 +10,7 @@
 - `@types/nprogress`
 - `@types/recompose`
 - `@types/react-transition-group`
+- `@types/lodash`
 - `react`
 - `react-dom`
 - `react-router-dom`
@@ -38,3 +39,4 @@
 - `ahooks`
 - `recompose`
 - `react-transition-group`
+- `lodash`

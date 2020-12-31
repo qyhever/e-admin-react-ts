@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import useEcharts from '@/hooks/useEcharts'
-import { getOption } from './line-option'
+import { getOption } from './column-option'
 
-const LineChart = () => {
+const ColumnChart = () => {
   const chartRef = useRef<HTMLDivElement | null>(null)
   const [option, setOption] = useState<echarts.EChartOption>({})
 
@@ -23,4 +23,4 @@ const LineChart = () => {
   )
 }
 
-export default LineChart
+export default ColumnChart

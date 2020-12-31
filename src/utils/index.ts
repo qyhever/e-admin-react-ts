@@ -3,6 +3,14 @@ import { RouteConfig } from 'react-router-config'
 import { BreadItemType, MenuItemType } from '@/store/user'
 import { isString } from '@/utils/type'
 
+const s4 = () => {
+  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+}
+
+export const genGuid = () => {
+  return (s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4())
+}
+
 // 获取包装组件的 displayName 的方法
 export const getDisplayName = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component'

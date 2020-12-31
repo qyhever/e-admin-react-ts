@@ -4,6 +4,10 @@ import CountUp from 'react-countup'
 import PageWrapper from '@/components/page-wrapper'
 import SvgIcon from '@/components/svg-icon'
 import LineChart from './components/line'
+import ColumnChart from './components/column'
+import PieChart from './components/pie'
+import UserList from './components/user-list'
+import OrderList from './components/order-list'
 import styles from './index.module.less'
 
 const infoCardList = [
@@ -54,6 +58,30 @@ const Dashboard: React.FC = () => {
       <div className={styles.line}>
         <LineChart></LineChart>
       </div>
+      <Row gutter={20}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+          <div className={styles.chartWrapper}>
+            <ColumnChart></ColumnChart>
+          </div>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+          <div className={styles.chartWrapper}>
+            <PieChart></PieChart>
+          </div>
+        </Col>
+      </Row>
+      <Row gutter={20}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+          <div className={styles.tableWrapper}>
+            <UserList></UserList>
+          </div>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+          <div className={styles.tableWrapper}>
+            <OrderList></OrderList>
+          </div>
+        </Col>
+      </Row>
     </PageWrapper>
   )
 }
