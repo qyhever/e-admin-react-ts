@@ -31,19 +31,24 @@ export const getTitle = (title: string | undefined) => {
 /**
  * 将一个扁平化的数组转换为树状结构
  * @param {Array} list
- * @param {Null | String} id 子节点关联属性 值
+ * @param {Null | String} parentValue 父节点关联属性 值
  * @param {String} key 子节点关联属性 键
  * @param {String} parentKey 父节点关联属性 键
  * @return {Array} 树状数据
  */
-export const listToTree = (list: any[], id: string | null, key: string, parentKey: string) => {
-  const ret: Array<any> = []
-  const temp = list.filter(v => v[parentKey] === id)
+export const listToTree = <T extends Record<string, any>>(
+  list: T[],
+  parentValue: string | null,
+  key: string,
+  parentKey: string
+) => {
+  const ret: T[] = []
+  const temp = list.filter(v => v[parentKey] === parentValue)
   temp.forEach(item => {
     ret.push({
       ...item,
-      id: String(item.id),
-      children: listToTree(list, item[key], key, parentKey)
+      // id: String(item.id),
+      children: listToTree<T>(list, item[key], key, parentKey)
     })
   })
   return ret

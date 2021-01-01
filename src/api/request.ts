@@ -97,7 +97,7 @@ const requestCatchEnd = (
   loadingCb(false)
   if (axios.isCancel(error)) { // 取消请求的错误，直接跳过
     console.log('repeated request: ' + error.message)
-    return genEmptyPromise()
+    return Promise.reject(error)
   }
   const msg = getErrorMsg(error, errorMsg)
   if (showError) {
@@ -215,8 +215,8 @@ const request = (options: IAxiosRequest) => {
     showError = true,
     showLoading = true,
     loadingCb = () => {}, // eslint-disable-line
-    throwWarningError = false,
-    throwHttpError = false,
+    throwWarningError = true,
+    throwHttpError = true,
     warningMsg = '',
     errorMsg = '',
     ...config

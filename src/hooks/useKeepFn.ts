@@ -4,15 +4,15 @@ import { useRef, useEffect, useCallback } from 'react'
 export type EmptyFnType = (...args: any[]) => any
 export type NeverFnType = () => void
 
-export default function <T extends NeverFnType>(fn: T) {
+export default function <T extends EmptyFnType>(fn: T) {
   const ref = useRef<T>()
 
   useEffect(() => {
     ref.current = fn
   }, [fn])
 
-  return useCallback(() => {
+  return useCallback((...args: any) => {
     const fn = ref.current
-    return fn && fn()
+    return fn && fn.apply(null, args)
   }, [ref])
 }

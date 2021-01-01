@@ -35,7 +35,7 @@ const infoCardList = [
 
 const Dashboard: React.FC = () => {
   return (
-    <PageWrapper transparent padding={false}>
+    <PageWrapper transparent padding={false} containerClass={styles.dashboardContainer}>
       <Row gutter={20}>
         {
           infoCardList.map((item, index) => (

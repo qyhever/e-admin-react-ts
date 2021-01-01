@@ -2,6 +2,18 @@ import request from '@/api/request'
 import axios from 'axios'
 import { getRandomStr } from '@/utils'
 
+export type ResourceItemType = {
+  code: string
+  createdAt: string
+  enable: boolean
+  id: number
+  name: string
+  parentCode: string | null
+  type: '1' | '2'
+  updatedAt: string
+  children?: ResourceItemType[]
+}
+
 export const getQiniuToken = (): Promise<{token: string}> => {
   return request({
     method: 'get',
@@ -35,7 +47,7 @@ export const getTotalRoles = () => {
   })
 }
 
-export const getTotalResources = () => {
+export const getTotalResources = (): Promise<ResourceItemType[]> => {
   return request({
     method: 'get',
     url: '/resource/total'

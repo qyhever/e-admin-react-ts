@@ -48,29 +48,40 @@ function dataFetchReducer(state: StateType, action: ActionType) {
 
 type OptionsType = {
   manual?: boolean
+  initialData?: any
+  onSuccess?: () => void
+  onError?: (e: unknown) => void
   [propName: string]: any
 }
 
 export default function <T = any>(fn: Service<T>, options: OptionsType = {}) {
+  const {
+    onSuccess = () => {}, // eslint-disable-line
+    onError = console.log
+  } = options
   const [state, dispatch] = useReducer(dataFetchReducer, {
-    result: null,
+    result: options.initialData || null,
     loading: false,
     error: null
   })
   const mounted = useRef(false)
   const service = useKeepFn(fn)
+  const onSuccessPersist = useKeepFn(onSuccess)
+  const onErrorPersist = useKeepFn(onError)
   // const service = usePersistFn(fn)
   // console.log('service', service)
 
-  const run = useCallback(async () => {
+  const run = useCallback(async (...args: any[]) => {
     dispatch({ type: 'FETCH_INIT' })
     try {
-      const res = await service()
+      const res = await service.apply(null, args)
       !mounted.current && dispatch({ type: 'FETCH_SUCCESS', payload: res })
+      onSuccessPersist && onSuccessPersist()
     } catch (e) {
       !mounted.current && dispatch({ type: 'FETCH_FAILURE', payload: e })
+      onErrorPersist && onErrorPersist(e)
     }
-  }, [service])
+  }, [service, onSuccessPersist, onErrorPersist])
 
   useEffect(() => {
     return () => {
@@ -87,7 +98,7 @@ export default function <T = any>(fn: Service<T>, options: OptionsType = {}) {
   }, [])
   return {
     ...omit(state, ['result']),
-    data: state.result,
+    data: state.result as T,
     run,
     mutate
   }
