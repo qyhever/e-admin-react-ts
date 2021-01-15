@@ -11,6 +11,8 @@ import Exception403 from '@/views/exception/403'
 import withAuthRouter from '@/hoc/withAuthRouter'
 import withNoAuthRouter from '@/hoc/withNoAuthRouter'
 import Dashboard from '@/views/dashboard'
+import Analysis from '@/views/analysis'
+import Market from '@/views/market'
 
 function lazyComponent(path: string) {
   return lazy(() => import(/* webpackChunkName: '[request]' */`@/views/${path}`))
@@ -176,6 +178,30 @@ export const basicRoutes: RouteConfig[] = [
   }
 ]
 
+const blankRoutes: RouteConfig[] = [
+  {
+    path: '/blank/analysis',
+    exact: true,
+    component: Analysis,
+    title: '分析页',
+    icon: 'SmileOutlined'
+  },
+  {
+    path: '/blank/market',
+    exact: true,
+    component: Market,
+    title: '市场地图',
+    icon: 'SmileOutlined'
+  },
+  {
+    path: '*',
+    component: Exception404,
+    hidden: true
+  }
+]
+
+export const totalRoutes = basicRoutes.concat(blankRoutes)
+
 const routes: RouteConfig[] = [
   {
     path: '/',
@@ -195,6 +221,11 @@ const routes: RouteConfig[] = [
     path: '/basic',
     component: BasicLayout,
     routes: basicRoutes
+  },
+  {
+    path: '/blank',
+    component: BlankLayout,
+    routes: blankRoutes
   },
   {
     path: '*',

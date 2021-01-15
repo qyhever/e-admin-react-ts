@@ -11,6 +11,7 @@
 - `@types/recompose`
 - `@types/react-transition-group`
 - `@types/lodash`
+- `@types/amap-js-api`
 - `react`
 - `react-dom`
 - `react-router-dom`

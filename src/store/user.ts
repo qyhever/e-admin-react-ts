@@ -2,7 +2,7 @@ import { action, observable } from 'mobx'
 import { login } from '@/views/login/service'
 import { setToken, setUser, getUser } from '@/utils/local'
 import { getAccessMenus, getFlattenMenus } from '@/utils'
-import { basicRoutes as routes } from '@/router/routes'
+import { totalRoutes as routes } from '@/router/routes'
 import { history } from '@/utils/history'
 import { LoginParamsType } from '@/views/login/service'
 

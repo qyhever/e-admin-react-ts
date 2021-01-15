@@ -1581,6 +1581,11 @@
   resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-7.2.1.tgz#2ad4e844175a3738cb9e7064be5ea070b8863a1c"
   integrity sha512-oZ0Ib5I4Z2pUEcoo95cT1cr6slco9WY7yiPpG+RGNkj8YcYgJnM7pXmYmorNOReh8MIGcKSqXyeGjxnr8YiZbA==
 
+"@types/amap-js-api@^1.4.9":
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/@types/amap-js-api/-/amap-js-api-1.4.9.tgz#b6b10f0d583788f803b1317ee21a6da92ebe11e6"
+  integrity sha512-g4+JRIKga/HjJHI5LaL//zFrmGF6DZLi5z6Rcpr4uR/c6LUTHA+xPZG2m10tsKfWO9/DybJormyN+aiwm4h1pw==
+
 "@types/aria-query@^4.2.0":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-4.2.1.tgz#78b5433344e2f92e8b306c06a5622c50c245bf6b"
