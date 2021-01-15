@@ -1,12 +1,10 @@
 import React from 'react'
 import PageWrapper from '@/components/page-wrapper'
 
-const Qrcode: React.FC = () => {
+export default function Highcharts() {
   return (
-    <PageWrapper isColumn>
-      Qrcode
+    <PageWrapper>
+      Highcharts
     </PageWrapper>
   )
 }
-
-export default Qrcode

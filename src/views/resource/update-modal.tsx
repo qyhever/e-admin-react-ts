@@ -3,7 +3,8 @@ import { Modal, Form, Input, Radio, Select, message } from 'antd'
 import { Canceler } from 'axios'
 import { useAsync } from '@/hooks'
 import { modalFormItemLayout } from '@/utils/layout'
-import { saveResource, QueryDirsResult, SaveResourceParams } from './service'
+import { saveResource } from './service'
+import { QueryDirsResult, SaveResourceFormData } from './types'
 import { ResourceItemType } from '@/api/global'
 
 const { Item: FormItem } = Form
@@ -20,7 +21,7 @@ type IProps = {
 
 const UpdateModal: React.FC<IProps> = (props) => {
   const { dirs, visible, close, refresh, query, detail } = props
-  const [ form ] = Form.useForm<SaveResourceParams>()
+  const [ form ] = Form.useForm<SaveResourceFormData>()
   // 编辑模式，回显数据
   useEffect(() => {
     if (visible) {

@@ -1,8 +1,11 @@
 .pageWrapper {
   min-height: calc(100vh - @header-height);
   background-color: @primary-bg-color;
-  &.isColmun {
+  &.isColumn {
     height: calc(100vh - @header-height);
+    .pageContainer {
+      height: 100%;
+    }
   }
   &.transparent .pageContainer {
     background-color: transparent;

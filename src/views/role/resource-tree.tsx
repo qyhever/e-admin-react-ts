@@ -34,11 +34,13 @@ const ResourceTree: React.FC<IProps> = (props) => {
   }
 
   const onCheck: OnCheckFn = (checkedKeys, { halfCheckedKeys }) => {
-    const totalKeys = [...checkedKeys, ...halfCheckedKeys]
-    onChange && onChange({
-      totalKeys, // 传递后给后端的数据
-      totalSubKeys: checkedKeys as (string | number)[] // 受控组件显示需要的勾选列表
-    })
+    if (Array.isArray(checkedKeys) && halfCheckedKeys?.length) {
+      const totalKeys = [...checkedKeys, ...halfCheckedKeys]
+      onChange && onChange({
+        totalKeys, // 传递后给后端的数据
+        totalSubKeys: checkedKeys as (string | number)[] // 受控组件显示需要的勾选列表
+      })
+    }
   }
   return (
     <Tree

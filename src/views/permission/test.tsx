@@ -1,12 +1,10 @@
 import React from 'react'
 import PageWrapper from '@/components/page-wrapper'
 
-const Qrcode: React.FC = () => {
+export default function TestPage() {
   return (
     <PageWrapper isColumn>
-      Qrcode
+      TestPage
     </PageWrapper>
   )
 }
-
-export default Qrcode

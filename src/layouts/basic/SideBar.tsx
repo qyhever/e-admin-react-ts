@@ -160,7 +160,7 @@ class SideBar extends PureComponent<IProps, IState> {
         <Scrollbars style={{height: '100%'}} autoHide>
           <Link className={styles.logoContainer} to="/">
             <img alt="logo" src={logoUrl} className={styles.image} />
-            {!collapsed && <h1 className={styles.title}>后台管理系统</h1>}
+            {!collapsed && <h1 className={styles.title}>e-admin</h1>}
           </Link>
           <Menu
             mode="inline"

@@ -6,18 +6,18 @@ import styles from './index.module.less'
 type IProps = {
   wrapperClass?: string
   containerClass?: string
-  isColmun?: boolean
+  isColumn?: boolean
   transparent?: boolean
   padding?: boolean
 }
 
 const PageWrapper: React.FC<IProps> = (props) => {
-  const { wrapperClass, containerClass, isColmun, transparent, padding } = props
+  const { wrapperClass, containerClass, isColumn, transparent, padding } = props
   const pageWrapperCls = classNames(
     styles.pageWrapper,
     wrapperClass,
     {
-      [styles.isColumn]: isColmun,
+      [styles.isColumn]: isColumn,
       [styles.transparent]: transparent,
       [styles.padding]: padding
     }
@@ -34,7 +34,7 @@ const PageWrapper: React.FC<IProps> = (props) => {
 PageWrapper.defaultProps = {
   wrapperClass: '',
   containerClass: '',
-  isColmun: false,
+  isColumn: false,
   transparent: false,
   padding: true
 }

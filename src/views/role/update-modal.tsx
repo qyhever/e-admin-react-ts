@@ -6,13 +6,14 @@ import useAsync from '@/hooks/useAsync'
 import { modalFormItemLayout } from '@/utils/layout'
 import ResourceTree from './resource-tree'
 import { listToTree } from '@/utils'
-import { saveRole, RoleListItem } from './service'
-import { ResourceItemType } from '@/api/global'
+import { saveRole } from './service'
+import { RoleListItem } from './types'
+import { ResourceItem } from '@/views/resource/types'
 
 const { Item: FormItem } = Form
 
 type IProps = {
-  resourceList: ResourceItemType[]
+  resourceList: ResourceItem[]
   visible: boolean
   close: () => void
   refresh: () => void
@@ -26,7 +27,7 @@ const UpdateModal: React.FC<IProps> = (props) => {
   const [ form ] = Form.useForm()
   const resourceTree = useMemo(() => {
     const tree = listToTree(resourceList, null, 'code', 'parentCode')
-    const normalizeTreeData = (treeData: ResourceItemType[]): DataNode[] => {
+    const normalizeTreeData = (treeData: ResourceItem[]): DataNode[] => {
       return treeData.map(item => {
         if (Array.isArray(item.children) && item.children.length) {
           return {

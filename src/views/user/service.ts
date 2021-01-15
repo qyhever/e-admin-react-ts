@@ -1,38 +1,48 @@
 import axios, { Canceler } from 'axios'
 import request from '@/api/request'
 import {
-  QueryRoleListFormData,
-  QueryRoleListResult,
-  SaveRoleFormData
+  QueryUserListFormData,
+  QueryUserListResult,
+  SaveUserFormData,
+  PatchUserFormData
 } from './types'
 
-export function getRoles(params: QueryRoleListFormData): Promise<QueryRoleListResult> {
+export const getUsers = (params: QueryUserListFormData): Promise<QueryUserListResult> => {
   return request({
     method: 'get',
-    url: '/role',
+    url: '/user',
     params
   })
 }
 
-export const saveRole = (
-  data: SaveRoleFormData,
+export const saveUser = (
+  params: SaveUserFormData,
   cancelCallback: (cancel: Canceler) => void = () => {} // eslint-disable-line
 ) => {
   return request({
     method: 'post',
-    url: '/role',
-    data,
+    url: '/user',
+    data: params,
     cancelToken: new axios.CancelToken(cancelCallback)
   })
 }
 
-export const deleteRole = (
-  params: {id: number},
+export const patchUser = (params: PatchUserFormData) => {
+  return request({
+    method: 'patch',
+    url: '/user',
+    data: params
+  })
+}
+
+export const deleteUser = (
+  params: { id: number },
   cancelCallback: (cancel: Canceler) => void = () => {} // eslint-disable-line
 ) => {
   return request({
     method: 'delete',
-    url: `/role/${params.id}`,
+    url: `/user/${params.id}`,
+    params,
     cancelToken: new axios.CancelToken(cancelCallback)
   })
 }

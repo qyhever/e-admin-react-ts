@@ -1,12 +1,10 @@
 import React from 'react'
 import PageWrapper from '@/components/page-wrapper'
 
-const Qrcode: React.FC = () => {
+export default function BraftPage() {
   return (
     <PageWrapper isColumn>
-      Qrcode
+      BraftPage
     </PageWrapper>
   )
 }
-
-export default Qrcode

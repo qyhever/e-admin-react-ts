@@ -1,37 +1,14 @@
 import axios, { Canceler } from 'axios'
 import request from '@/api/request'
-import { ResourceItemType } from '@/api/global'
+import {
+  QueryResourceListFormData,
+  QueryResourceListResult,
+  QueryDirsResult,
+  SaveResourceFormData,
+  PatchResourceFormData
+} from './types'
 
-export type ResourceCategory = '1' | '2'
-
-export type GetResourcesParams = BasicTableParams & {
-  name?: string
-  code?: string
-  type?: ResourceCategory
-}
-
-export type SaveResourceParams = {
-  id?: number
-  name: string
-  code: string
-  type: ResourceCategory
-  parentCode: string | null
-}
-
-export type PatchResourceParams = {
-  id: number
-  enable: boolean
-}
-
-export type QueryResourceListResult = QueryListResult<ResourceItemType>
-
-export type QueryDirsResult = {
-  id: number
-  code: string | null
-  name: string
-}
-
-export const getResources = (params: GetResourcesParams): Promise<QueryResourceListResult> => {
+export const getResources = (params: QueryResourceListFormData): Promise<QueryResourceListResult> => {
   return request({
     method: 'get',
     url: '/resource',
@@ -47,7 +24,7 @@ export const getDirs = (): Promise<QueryDirsResult[]> => {
 }
 
 export const saveResource = (
-  params: SaveResourceParams,
+  params: SaveResourceFormData,
   cancelCallback: (cancel: Canceler) => void = () => {} // eslint-disable-line
 ) => {
   return request({
@@ -59,7 +36,7 @@ export const saveResource = (
 }
 
 export const patchResource = (
-  params: PatchResourceParams,
+  params: PatchResourceFormData,
   cancelCallback: (cancel: Canceler) => void = () => {} // eslint-disable-line
 ) => {
   return request({

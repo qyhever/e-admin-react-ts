@@ -1,18 +1,7 @@
 import request from '@/api/request'
 import axios from 'axios'
 import { getRandomStr } from '@/utils'
-
-export type ResourceItemType = {
-  code: string
-  createdAt: string
-  enable: boolean
-  id: number
-  name: string
-  parentCode: string | null
-  type: '1' | '2'
-  updatedAt: string
-  children?: ResourceItemType[]
-}
+import { ResourceItem } from '@/views/resource/types'
 
 export const getQiniuToken = (): Promise<{token: string}> => {
   return request({
@@ -40,14 +29,16 @@ export const uploadFileToQiniu = async (
   return window.QINIU_PREFIX + res.data.key
 }
 
-export const getTotalRoles = () => {
+export type OptionRoleListItem = { id: number, name: string }
+
+export const getTotalRoles = (): Promise<OptionRoleListItem[]> => {
   return request({
     method: 'get',
     url: '/role/total'
   })
 }
 
-export const getTotalResources = (): Promise<ResourceItemType[]> => {
+export const getTotalResources = (): Promise<ResourceItem[]> => {
   return request({
     method: 'get',
     url: '/resource/total'

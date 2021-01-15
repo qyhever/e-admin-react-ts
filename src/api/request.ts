@@ -203,8 +203,8 @@ type IAxiosRequest = AxiosRequestConfig & {
  * @param {Boolean} [options.showError=true] 是否显示http错误提示（http请求失败）
  * @param {Boolean} [options.showLoading=true] 是否显示 loading
  * @param {Function} [options.loadingCb=()=>{}] loading 状态回调
- * @param {Boolean} [options.throwWarningError=false] 是否抛出业务逻辑错误（请求成功，但业务状态码非成功状态）
- * @param {Boolean} [options.throwHttpError=false] 是否显示http错误（http请求失败）
+ * @param {Boolean} [options.throwWarningError=true] 是否抛出业务逻辑错误（请求成功，但业务状态码非成功状态）
+ * @param {Boolean} [options.throwHttpError=true] 是否显示http错误（http请求失败）
  * @param {String} [options.warningMsg=''] 业务错误提示
  * @param {String} [options.errorMsg=''] http错误提示
  * @return {Promise} Promise

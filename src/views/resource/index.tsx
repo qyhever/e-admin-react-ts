@@ -10,9 +10,9 @@ import { formatDateTime } from '@/utils/date'
 import { useAsync, useKeepFn } from '@/hooks'
 import { getResources, deleteResource, getDirs, patchResource } from './service'
 import UpdateModal from './update-modal'
-import { ResourceItemType } from '@/api/global'
+import { ResourceItem } from './types'
 
-type OnTableChangeType = TableProps<ResourceItemType>['onChange']
+type OnTableChangeType = TableProps<ResourceItem>['onChange']
 
 const { Option } = Select
 const { Item: FormItem } = Form
@@ -25,7 +25,7 @@ const initPaginationParams = {
 const Resource: React.FC = () => {
   const [ form ] = Form.useForm()
   const [pager, setPager] = useState<BasicTableParams>(initPaginationParams)
-  const [ detail, setDetail ] = useState({} as ResourceItemType)
+  const [ detail, setDetail ] = useState({} as ResourceItem)
   // 查询目录资源
   const { data: dirData, loading: dirQuerying } = useAsync(getDirs, {
     initialData: []
@@ -49,7 +49,7 @@ const Resource: React.FC = () => {
   // 关闭 modal 时，清空 detail
   useEffect(() => {
     if (!visible) {
-      setDetail({} as ResourceItemType)
+      setDetail({} as ResourceItem)
     }
   }, [visible])
 
@@ -79,7 +79,7 @@ const Resource: React.FC = () => {
     run()
   }
 
-  const onTableChange: OnTableChangeType = (pagination, filters, sorter: SorterResult<ResourceItemType>) => {
+  const onTableChange: OnTableChangeType = (pagination, filters, sorter: SorterResult<ResourceItem>) => {
     const p = {
       ...pager,
       page: pagination.current,
@@ -113,7 +113,7 @@ const Resource: React.FC = () => {
     }
   })
   // 删除操作
-  const onDelete = (record: ResourceItemType) => {
+  const onDelete = (record: ResourceItem) => {
     Modal.confirm({
       title: '温馨提示',
       content: '确定要删除吗？',
@@ -130,12 +130,12 @@ const Resource: React.FC = () => {
     })
   }
   // 打开编辑 modal
-  const onUpdate = (record: ResourceItemType) => {
+  const onUpdate = (record: ResourceItem) => {
     setDetail(record)
     openModal()
   }
   // 切换状态
-  const onToggleEnable = (record: ResourceItemType) => {
+  const onToggleEnable = (record: ResourceItem) => {
     toggleEnable({
       id: record.id,
       enable: !record.enable
@@ -156,7 +156,7 @@ const Resource: React.FC = () => {
     })
   }
 
-  const columns: ColumnsType<ResourceItemType> = [{
+  const columns: ColumnsType<ResourceItem> = [{
     title: '权限名',
     align: 'center',
     dataIndex: 'name',
