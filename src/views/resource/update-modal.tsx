@@ -5,7 +5,7 @@ import { useAsync } from '@/hooks'
 import { modalFormItemLayout } from '@/utils/layout'
 import { saveResource } from './service'
 import { QueryDirsResult, SaveResourceFormData } from './types'
-import { ResourceItemType } from '@/api/global'
+import { ResourceItem } from './types'
 
 const { Item: FormItem } = Form
 const { Option } = Select
@@ -16,7 +16,7 @@ type IProps = {
   close: () => void
   refresh: () => void
   query: () => void
-  detail: ResourceItemType
+  detail: ResourceItem
 }
 
 const UpdateModal: React.FC<IProps> = (props) => {

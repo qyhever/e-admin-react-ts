@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Breadcrumb } from 'antd'
-import withBreadcrumbs, { InjectedProps } from 'react-router-breadcrumbs-hoc'
+import withBreadcrumbs from 'react-router-breadcrumbs-hoc'
 import styles from './index.module.less'
 import { BreadsType } from '@/store/user'
 /**
@@ -14,7 +14,9 @@ import { BreadsType } from '@/store/user'
 //   { path: '/form/basic', breadcrumb: '表单' }
 // ]
 
-type IProps = InjectedProps
+type IProps = {
+  breadcrumbs: Array<React.ReactNode | string>
+}
 const BreadcrumbComponent: React.FC<IProps> = (({ breadcrumbs }) => {
   return (
     <Breadcrumb className={styles.bread}>
@@ -32,11 +34,15 @@ const BreadcrumbComponent: React.FC<IProps> = (({ breadcrumbs }) => {
   )
 })
 
-const BreadcrumbNavigation: React.FC<{breadcrumbs: BreadsType}> = ({ breadcrumbs = [] }) => {
+type BreadcrumbNavigationProps = {
+  breadcrumbs: BreadsType
+}
+
+const BreadcrumbNavigation: React.FC<BreadcrumbNavigationProps> = ({ breadcrumbs = [] }) => {
   const BreadWrapper = withBreadcrumbs(
     breadcrumbs,
     {excludePaths: ['/basic']}
   )(BreadcrumbComponent)
-  return <BreadWrapper/>
+  return <BreadWrapper />
 }
 export default BreadcrumbNavigation

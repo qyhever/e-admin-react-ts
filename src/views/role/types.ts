@@ -28,5 +28,5 @@ export type SaveRoleFormData = {
   id?: number
   name: string
   description: string
-  resources: string[]
+  resources: number[]
 }

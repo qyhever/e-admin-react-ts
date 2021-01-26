@@ -71,6 +71,12 @@ export const basicRoutes: RouteConfig[] = [
         title: '二维码'
       },
       {
+        path: '/basic/base/edit-cell-table',
+        exact: true,
+        component: withAuthRouter(lazyComponent('base/edit-cell-table')),
+        title: '表格可编辑行'
+      },
+      {
         path: '*',
         component: Exception404,
         hidden: true
